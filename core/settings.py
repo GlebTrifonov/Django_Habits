@@ -124,3 +124,12 @@ STATIC_URL = "static/"
 
 LOGIN_REDIRECT_URL = 'habit_list'
 LOGOUT_REDIRECT_URL = 'home'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    )
+
+
+}
