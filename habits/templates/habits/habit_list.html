@@ -1,20 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1>{{ title }}</h1>
-    <ul>
-        {% for habit in my_habits %}
-            <li>
-                <strong>{{ habit.title }}</strong> 
-                — {% if habit.is_completed %} ✅ {% else %} ❌ {% endif %}
-            </li>
-        {% empty %}
-            <li>Привычек пока нет. Добавьте их в админке!</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'habit_create' %}">Добавить привычку</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+        <ul>
+            {% for habit in my_habits %}
+                <li>
+                    <strong>{{ habit.title }}</strong> 
+                    — {% if habit.is_completed %} ✅ {% else %} ❌ {% endif %}
+                </li>
+            {% empty %}
+                <li>Привычек пока нет. Добавьте их в админке!</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'habit_create' %}">Добавить привычку</a>
+{% endblock %}
