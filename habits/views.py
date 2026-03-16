@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from .models import Habit
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def habit_list(request):
-    habits = Habit.objects.all()
+    habits = Habit.objects.filter(user=request.user)
     context = {
         'my_habits': habits,
         'title': 'Мой список привычек',
