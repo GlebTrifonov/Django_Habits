@@ -2,11 +2,10 @@
 
 Минималистичный трекер привычек с полноценным веб-интерфейсом и защищенным API. Проект построен по принципу разделения монолитной логики и REST-архитектуры.
 
-![Python](https://img.shields.io)
-![Django](https://img.shields.io)
-![DRF](https://img.shields.io)
-![JWT](https://img.shields.io)
-
+![Python]
+![Django]
+![DRF]
+![JWT]
 ---
 
 ## Основные возможности
@@ -40,18 +39,22 @@
    cd Django_Habits
 
 2. **Создайте и активируйте виртуальное окружение**
-python -m venv venv
-source venv/bin/activate  # Для Linux/Mac
-venv\Scripts\activate     # Для Windows
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # Для Linux/Mac
+    venv\Scripts\activate     # Для Windows
 
 3. **Установите зависимости**
-pip install django djangorestframework djangorestframework-simplejwt
+     ```bash
+    pip install django djangorestframework djangorestframework-simplejwt
 
 4. **Примените миграции и создайте админа**
-python manage.py migrate
-python manage.py createsuperuser
+     ```bash
+    python manage.py migrate
+    python manage.py createsuperuser
 
 5. **Запустите сервер**
-python manage.py runserver
+     ```bash
+    python manage.py runserver
 
 
