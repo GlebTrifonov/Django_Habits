@@ -31,3 +31,10 @@ def habit_create(request):
     }
 
     return render(request, 'habits/habit_form.html', context)
+
+@login_required
+def habit_toggle(request, pk):
+    habit = get_object_or_404(Habit, pk=pk, user=request.user)
+    habit.is_completed = not habit.is_completed
+    habit.save()
+    return redirect('habit_list')
