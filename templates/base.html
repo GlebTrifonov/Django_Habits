@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Habit Tracker{% endblock %}</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
+        nav { border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; }
+        .auth-links { float: right; }
+    </style>
+</head>
+<body>
+    <nav>
+        <strong><a href="{% url 'home' %}">HabitTracker</a></strong>
+        
+        <div class="auth-links">
+            {% if user.is_authenticated %}
+                <span>Привет, <b>{{ user.username }}</b>!</span> | 
+                <a href="{% url 'habit_list' %}">Мои привычки</a> |
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | 
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+        <!-- Сюда будет вставляться уникальный код каждой страницы -->
+        {% endblock %}
+    </main>
+</body>
+</html>

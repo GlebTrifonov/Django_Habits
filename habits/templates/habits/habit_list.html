@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Мои привычки</h1>
+    <a href="{% url 'habit_create' %}">+ Добавить новую</a>
+    <hr>
+
+    <ul>
+        {% for habit in my_habits %}
+            <li style="margin-bottom: 10px;">
+                <!-- Если выполнено — зачеркиваем текст -->
+                {% if habit.is_completed %}
+                    <strike>{{ habit.title }}</strike> ✅
+                {% else %}
+                    <strong>{{ habit.title }}</strong> ❌
+                {% endif %}
+
+                <!-- Кнопка-переключатель -->
+                <form action="{% url 'habit_toggle' habit.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if habit.is_completed %} Вернуть в работу {% else %} Отметить как сделано {% endif %}
+                    </button>
+                </form>
+                <form action="{% url 'habit_delete' habit.pk %}" method="post" style="display:inline;" onsubmit="return confirm('Точно удалить?');">
+                    {% csrf_token %}
+                    <button type="submit" style="color: red;">Удалить</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>У вас пока нет привычек. <a href="{% url 'habit_create' %}">Создайте первую!</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
