@@ -22,6 +22,10 @@
                         {% if habit.is_completed %} Вернуть в работу {% else %} Отметить как сделано {% endif %}
                     </button>
                 </form>
+                <form action="{% url 'habit_delete' habit.pk %}" method="post" style="display:inline;" onsubmit="return confirm('Точно удалить?');">
+                    {% csrf_token %}
+                    <button type="submit" style="color: red;">Удалить</button>
+                </form>
             </li>
         {% empty %}
             <li>У вас пока нет привычек. <a href="{% url 'habit_create' %}">Создайте первую!</a></li>

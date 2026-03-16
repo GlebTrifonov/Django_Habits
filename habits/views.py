@@ -38,3 +38,12 @@ def habit_toggle(request, pk):
     habit.is_completed = not habit.is_completed
     habit.save()
     return redirect('habit_list')
+
+
+@login_required
+def habit_delete(request, pk):
+    habit = get_object_or_404(Habit, pk=pk, user=request.user)
+    if request.method == 'POST':
+        habit.delete()
+        return redirect('habit_list')
+    return redirect('habit_list')
