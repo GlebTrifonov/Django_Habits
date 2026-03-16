@@ -1,34 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Мои привычки</h1>
-    <a href="{% url 'habit_create' %}">+ Добавить новую</a>
-    <hr>
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Мои привычки</h1>
+    <a href="{% url 'habit_create' %}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition shadow-sm">
+        + Новая привычка
+    </a>
+</div>
 
-    <ul>
-        {% for habit in my_habits %}
-            <li style="margin-bottom: 10px;">
-                <!-- Если выполнено — зачеркиваем текст -->
-                {% if habit.is_completed %}
-                    <strike>{{ habit.title }}</strike> ✅
-                {% else %}
-                    <strong>{{ habit.title }}</strong> ❌
-                {% endif %}
+<div class="grid gap-4">
+    {% for habit in my_habits %}
+    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between transition hover:shadow-md {% if habit.is_completed %}opacity-60 bg-gray-50{% endif %}">
+        <div class="flex-1 mr-4">
+            <h3 class="font-semibold text-lg {% if habit.is_completed %}line-through text-gray-500{% else %}text-gray-800{% endif %}">
+                {{ habit.title }}
+            </h3>
+            {% if habit.description %}
+                <p class="text-sm text-gray-500 mt-1">{{ habit.description }}</p>
+            {% endif %}
+            <span class="text-[10px] text-gray-400 uppercase tracking-wider mt-2 block">{{ habit.created_at|date:"d M Y" }}</span>
+        </div>
 
-                <!-- Кнопка-переключатель -->
-                <form action="{% url 'habit_toggle' habit.pk %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">
-                        {% if habit.is_completed %} Вернуть в работу {% else %} Отметить как сделано {% endif %}
-                    </button>
-                </form>
-                <form action="{% url 'habit_delete' habit.pk %}" method="post" style="display:inline;" onsubmit="return confirm('Точно удалить?');">
-                    {% csrf_token %}
-                    <button type="submit" style="color: red;">Удалить</button>
-                </form>
-            </li>
-        {% empty %}
-            <li>У вас пока нет привычек. <a href="{% url 'habit_create' %}">Создайте первую!</a></li>
-        {% endfor %}
-    </ul>
+        <div class="flex items-center space-x-2">
+            <!-- Кнопка переключения -->
+            <form action="{% url 'habit_toggle' habit.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="p-2 rounded-full transition {% if habit.is_completed %}bg-green-100 text-green-600 hover:bg-green-200{% else %}bg-gray-100 text-gray-400 hover:bg-indigo-100 hover:text-indigo-600{% endif %}">
+                    <svg xmlns="http://www.w3.org" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </button>
+            </form>
+
+            <!-- Кнопка удаления -->
+            <form action="{% url 'habit_delete' habit.pk %}" method="post" onsubmit="return confirm('Удалить привычку?');">
+                {% csrf_token %}
+                <button type="submit" class="p-2 text-gray-300 hover:text-red-500 transition">
+                    <svg xmlns="http://www.w3.org" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-12 bg-white rounded-xl border-2 border-dashed border-gray-200">
+        <p class="text-gray-500">У вас пока нет привычек. Пора начать что-то новое!</p>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

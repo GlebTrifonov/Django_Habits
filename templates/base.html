@@ -2,36 +2,35 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Habit Tracker{% endblock %}</title>
-    <style>
-        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
-        nav { border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; }
-        .auth-links { float: right; }
-    </style>
+    <!-- Подключаем Tailwind для стилей -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <nav>
-        <strong><a href="{% url 'home' %}">HabitTracker</a></strong>
-        
-        <div class="auth-links">
-            {% if user.is_authenticated %}
-                <span>Привет, <b>{{ user.username }}</b>!</span> | 
-                <a href="{% url 'habit_list' %}">Мои привычки</a> |
-                <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Выйти</button>
-                </form>
-            {% else %}
-                <a href="{% url 'login' %}">Войти</a> | 
-                <a href="{% url 'register' %}">Регистрация</a>
-            {% endif %}
+<body class="bg-gray-50 text-gray-900 min-h-screen">
+    <nav class="bg-white shadow-sm border-b border-gray-200 mb-8">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="{% url 'home' %}" class="text-xl font-bold text-indigo-600 hover:text-indigo-500 transition">
+                HabitTracker
+            </a>
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="text-sm text-gray-600 hidden sm:inline">Привет, <span class="font-semibold text-gray-800">{{ user.username }}</span></span>
+                    <a href="{% url 'habit_list' %}" class="text-sm font-medium text-gray-700 hover:text-indigo-600">Привычки</a>
+                    <form action="{% url 'logout' %}" method="post" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-sm font-medium text-red-500 hover:text-red-700">Выйти</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-sm font-medium text-gray-700 hover:text-indigo-600">Войти</a>
+                    <a href="{% url 'register' %}" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition">Регистрация</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
 
-    <main>
-        {% block content %}
-        <!-- Сюда будет вставляться уникальный код каждой страницы -->
-        {% endblock %}
+    <main class="max-w-4xl mx-auto px-4 pb-12">
+        {% block content %}{% endblock %}
     </main>
 </body>
 </html>
