@@ -1,7 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Добро пожаловать в Habit Tracker!</h1>
-    <p>Этот сервис поможет тебе стать лучше день за днем.</p>
+    <div class="flex flex-col items-center justify-center py-16 text-center">
+    <!-- Иконка или стилизованный круг -->
+    <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-3xl flex items-center justify-center mb-8 shadow-inner">
+        <svg xmlns="http://www.w3.org" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+    </div>
 
-    <a href="{% url 'login' %}">Войти в аккаунт</a>
+    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
+        Меняй жизнь <span class="text-indigo-600">шаг за шагом</span>
+    </h1>
+    
+    <p class="text-lg text-gray-600 max-w-xl mb-10 leading-relaxed">
+        HabitTracker помогает дисциплинировать себя, отслеживать прогресс и превращать маленькие действия в большие победы. Начни прямо сейчас.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4">
+        {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 transition shadow-xl shadow-indigo-200 transform hover:-translate-y-1">
+                Создать аккаунт
+            </a>
+            <a href="{% url 'login' %}" class="px-8 py-4 bg-white text-gray-700 font-bold rounded-2xl border border-gray-200 hover:bg-gray-50 transition shadow-sm transform hover:-translate-y-1">
+                Уже есть профиль
+            </a>
+        {% else %}
+            <a href="{% url 'habit_list' %}" class="px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 transition shadow-xl shadow-indigo-200 transform hover:-translate-y-1">
+                Перейти к моим привычкам
+            </a>
+        {% endif %}
+    </div>
+    <!-- Маленькая статистика/фишки снизу -->
+    <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-gray-100 pt-12">
+        <div>
+            <h4 class="font-bold text-gray-900 uppercase text-xs tracking-widest mb-2">Простота</h4>
+            <p class="text-sm text-gray-500">Ничего лишнего. Только ты и твои цели на сегодня.</p>
+        </div>
+        <div>
+            <h4 class="font-bold text-gray-900 uppercase text-xs tracking-widest mb-2">Доступность</h4>
+            <p class="text-sm text-gray-500">Твои привычки всегда под рукой в браузере или API.</p>
+        </div>
+        <div>
+            <h4 class="font-bold text-gray-900 uppercase text-xs tracking-widest mb-2">Безопасность</h4>
+            <p class="text-sm text-gray-500">Твои данные защищены и доступны только тебе.</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
